@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+title: "PeerKV: Compute Follows the KV — NVLink KV-Parallel Attention and Peer-GPU Tiering for Long-Context LLM Inference"
+message: "Cite as below."
+authors:
+  - given-names: Chet
+    family-names: Li
+type: software
+abstract: >
+  PeerKV makes peer-GPU HBM over NVLink a first-class near tier for an LLM
+  KV cache that overflows a single GPU. It contributes a calibrated
+  cross-tier cost model, a closed-form schedulability sizing inversion, and a
+  topology-aware placement policy; the headline mechanism is
+  "compute follows the KV": instead of moving cold KV back over NVLink, each
+  GPU computes its shard's attention partial locally and only the ~KB
+  online-softmax statistics cross the link (numerically exact, ring/flash
+  merge). Measured on a dual-A100 NVLink server. The Python package is
+  imported as `umallm` (historical module name).
+license: Apache-2.0

@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Test / lint caches
+.pytest_cache/
+pytest-cache-files-*/
+.ruff_cache/
+.mypy_cache/
+
+# Native build artifacts
+*.so
+*.dylib
+*.o
+*.a
+
+# Experiment outputs and profiler artifacts
+experiments/results*/
+experiments/**/results*/
+tests/_artifacts/
+*.nsys-rep
+*.qdrep
+*.sqlite
+cufile.log
+
+# Logs and local bundles
+*.log
+*.tar.gz
+*.zip
+
+# LaTeX/editor artifacts that may be generated locally
+*.aux
+*.fls
+*.fdb_latexmk
+*.bbl
+*.blg
+*.out
+*.pdf
+
+# OS / editor
+.DS_Store
+
+# Local agent/IDE state
+.claude/
+.tmp_seer_ocr/
+.venv/
+.venv_vllm/

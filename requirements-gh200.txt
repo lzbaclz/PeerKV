@@ -1,0 +1,17 @@
+# GH200 evaluation environment (Route B). Install on the box BEFORE the run:
+#     UMA_BUILD_CUDA=1 pip install -r requirements-gh200.txt
+#     UMA_BUILD_CUDA=1 pip install -e .[vllm]   # builds umallm._uma_native (sm_90)
+#
+# Pin exact versions you actually used into 00_env.txt at run time -- the CUDA
+# toolchain on the rented box is the real source of truth. Lower bounds here:
+#
+# torch >= 2.4 is required: the managed-pool API (torch.cuda.MemPool /
+# use_mem_pool / CUDAPluggableAllocator) that Route B binds to landed in 2.4.
+torch>=2.4
+# vLLM V1 connector + KV-allocation site the uma_backend patch wraps.
+vllm>=0.8
+transformers>=4.44
+numpy>=1.24
+matplotlib>=3.7        # figures (optional; analysis falls back to tables-only)
+# CUDA: 12.2+ recommended (cudaMemAdvise_v2 / HostNuma targeting if you switch
+# uma_residency.cu off the classic API). nvcc must be on PATH for the build.

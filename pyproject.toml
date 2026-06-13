@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+# Project/distribution name is PeerKV; the importable Python package is `umallm`
+# (historical module name, kept so existing imports stay valid).
+name = "peerkv"
+version = "0.2.0"
+description = "PeerKV: NVLink KV-parallel attention + peer-GPU KV tiering for long-context LLM inference (multi-GPU; A100/NVLink). Imported as `umallm`."
+authors = [{name = "Chet"}]
+requires-python = ">=3.10"
+license = {text = "Apache-2.0"}
+dependencies = [
+    "numpy>=1.26",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+mlx = ["mlx>=0.18", "mlx-lm>=0.18"]
+torch = ["torch>=2.3"]
+eval = ["transformers>=4.44", "datasets"]
+# Route B (GH200): vLLM engine + the managed-pool MemPool API (torch>=2.4).
+# Build the native extension with `UMA_BUILD_CUDA=1 pip install -e .[vllm]`.
+vllm = ["vllm>=0.8", "torch>=2.4"]
+
+[tool.setuptools.packages.find]
+include = ["umallm*"]
+
+[tool.pytest.ini_options]
+# Only collect the curated unit-test suite. The experiments/ tree is a set of
+# hardware probes meant to be run directly (python experiments/gN_*.py); they
+# import torch/cuda at module top-level and are not pytest unit tests.
+testpaths = ["tests"]
+markers = [
+    "gpu: requires one or more CUDA GPUs (skipped in CPU CI)",
+    "perf: performance-regression test (needs a stable, idle GPU box)",
+    "soak: long-running stability test (hours)",
+]
